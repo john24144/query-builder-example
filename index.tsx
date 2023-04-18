@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import QueryBuilder from './QueryBuilder';
 import './style.css';

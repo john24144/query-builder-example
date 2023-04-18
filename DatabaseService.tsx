@@ -8,21 +8,24 @@ export function fetchFullDatabaseList(): Promise<Database[]> {
         {
           name: 'CAPLUS',
           type: 'DATABASE',
-          selected: false,
-          favorite: true,
         },
         {
           name: 'REGISTRY',
           type: 'DATABASE',
-          selected: false,
           favorite: false,
+          falseProperty: 'something',
         },
         {
           name: 'MARPAT',
           type: 'CLUSTER',
-          selected: false,
           favorite: false,
         },
+        {
+          name: 'EPFULL',
+          type: 'FALSETYPE',
+          favorite: true,
+        },
+        {},
       ] as Database[]
   );
 }

@@ -1,12 +1,12 @@
-import { Dispatch } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 import React = require('react');
 
-export default function QueryBuilderModal({
+function QueryBuilderModal({
   onSubmit,
   children,
 }: {
   onSubmit: () => void;
-  children: JSX.Element | JSX.Element[];
+  children?: ReactNode;
 }) {
   return (
     <div>
@@ -16,48 +16,40 @@ export default function QueryBuilderModal({
   );
 }
 
-function Filter(props: {
+const Filter: FunctionComponent<{
   value: string;
   placeholder: string;
-  onChange: Dispatch<string>;
-}): JSX.Element {
-  const { value, placeholder, onChange } = props;
+  onChange: (value: string) => void;
+}> = ({ value, placeholder, onChange }) => (
+  <div>
+    <input
+      value={value}
+      placeholder={placeholder}
+      onChange={(event) => onChange(event.target.value)}
+    />
+    <button onClick={() => onChange('')}>Clear</button>
+  </div>
+);
 
-  return (
-    <div>
-      <input
-        value={value}
-        placeholder={placeholder}
-        onChange={(event) => onChange(event.target.value)}
-      />
-      <button onClick={() => onChange('')}>Clear</button>
-    </div>
-  );
-}
+const View: FunctionComponent<{
+  selectedView: string;
+  viewList: string[];
+  onChange: (value: string) => void;
+}> = ({ selectedView, viewList, onChange }) => (
+  <div>
+    {viewList.map((view) => (
+      <button onClick={() => onChange(view)}>
+        {view === selectedView ? <b>{view}</b> : view}
+      </button>
+    ))}
+  </div>
+);
 
-function View<Type>(props: {
-  selectedView: Type;
-  viewList: Type[];
-  onChange: Dispatch<Type>;
-}): JSX.Element {
-  const { selectedView, viewList, onChange } = props;
-
-  return (
-    <div>
-      {viewList.map((view) => (
-        <button onClick={() => onChange(view)}>
-          {view === selectedView ? <b>{view as string}</b> : (view as string)}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function List(props: { children: JSX.Element | JSX.Element[] }): JSX.Element {
-  const { children } = props;
-  return <div>{children}</div>;
-}
+const List: FunctionComponent<{
+  children?: ReactNode;
+}> = ({ children }) => <div>{children}</div>;
 
 QueryBuilderModal.Filter = Filter;
 QueryBuilderModal.View = View;
 QueryBuilderModal.List = List;
+export default QueryBuilderModal;

@@ -1,48 +1,45 @@
-import { useState, createContext } from 'react';
+import { useState, FunctionComponent } from 'react';
 import React = require('react');
 import { Database } from './Database';
 import DatabaseSelector from './DatabaseSelector';
 import SelectedDatabaseList from './SelectedDatabaseList';
 
-export const databaseListContext = createContext()
+const QueryBuilder: FunctionComponent<{}> = () => {
+  const [databaseList, setDatabaseList] = useState([] as Database[]);
 
-export default function QueryBuilder(): JSX.Element {
-  const [selectedDatabaseList, setSelectedDatabaseList] = useState(
-    [] as Database[]
+  const DatabaseSection: FunctionComponent<{}> = () => (
+    <Section header="Select Databases">
+      <SelectedDatabaseList
+        model={databaseList}
+        onDatabaseListChange={setDatabaseList}
+      />
+      <DatabaseSelector
+        selectedDatabaseList={databaseList}
+        onDatabaseListSelected={setDatabaseList}
+      />
+    </Section>
   );
 
   return (
     <div>
-      <QueryBuilder.Section header="Select Databases">
-        <SelectedDatabaseList
-          model={selectedDatabaseList}
-          onDatabaseListChange={setSelectedDatabaseList}
-        />
-        <DatabaseSelector
-          selectedDatabaseList={selectedDatabaseList}
-          onDatabaseListSelected={setSelectedDatabaseList}
-        />
-      </QueryBuilder.Section>
+      <DatabaseSection />
     </div>
   );
-}
+};
 
-function Section({
-  header,
-  children,
-}: {
+const Section: FunctionComponent<{
   header: string;
   children: JSX.Element | JSX.Element[];
-}): JSX.Element {
+}> = ({ header, children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div>
       <hr />
       <button onClick={() => setIsOpen(!isOpen)}>Open</button> {header}
-      {isOpen ? children : null}
+      <div hidden={!isOpen}>{children}</div>
     </div>
   );
-}
+};
 
-QueryBuilder.Section = Section;
+export default QueryBuilder;

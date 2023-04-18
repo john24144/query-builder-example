@@ -1,13 +1,16 @@
+import { FunctionComponent } from 'react';
 import React = require('react');
 import { Database } from './Database';
 
-export default function DatabaseComponent({
-  model,
-  onDatabaseListChange,
-}: {
+type DatabaseProps = {
   model: Database[];
   onDatabaseListChange: (value: Database[]) => void;
-}): JSX.Element {
+};
+
+const DatabaseComponent: FunctionComponent<DatabaseProps> = ({
+  model,
+  onDatabaseListChange,
+}) => {
   function onDatabaseRemoved(removedDatabase: Database): void {
     onDatabaseListChange(
       model.filter((database) => database.name !== removedDatabase.name)
@@ -24,4 +27,6 @@ export default function DatabaseComponent({
       ))}
     </div>
   );
-}
+};
+
+export default DatabaseComponent;
