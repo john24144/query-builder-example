@@ -2,15 +2,12 @@ import { FunctionComponent } from 'react';
 import React = require('react');
 import { Database } from './Database';
 
-type DatabaseProps = {
+const SelectedDatabase: FunctionComponent<{}> = 
+
+const DatabaseComponent: FunctionComponent<{
   model: Database[];
   onDatabaseListChange: (value: Database[]) => void;
-};
-
-const DatabaseComponent: FunctionComponent<DatabaseProps> = ({
-  model,
-  onDatabaseListChange,
-}) => {
+}> = ({ model, onDatabaseListChange }) => {
   function onDatabaseRemoved(removedDatabase: Database): void {
     onDatabaseListChange(
       model.filter((database) => database.name !== removedDatabase.name)

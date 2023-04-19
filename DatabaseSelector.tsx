@@ -37,10 +37,9 @@ function DatabaseSelector({
   }
 
   useEffect(() => {
-    fetchFullDatabaseList().then((fullDatabaseList) => {
-      console.log(fullDatabaseList);
-      setDatabaseList(updateSelectedDatabaseList(fullDatabaseList));
-    });
+    fetchFullDatabaseList().then((fullDatabaseList) =>
+      setDatabaseList(updateSelectedDatabaseList(fullDatabaseList))
+    );
   }, []);
 
   useEffect(() => {

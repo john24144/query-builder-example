@@ -1,22 +1,17 @@
 import { FunctionComponent, ReactNode } from 'react';
 import React = require('react');
 
-function QueryBuilderModal({
-  onSubmit,
-  children,
-}: {
+const modal: FunctionComponent<{
   onSubmit: () => void;
   children?: ReactNode;
-}) {
-  return (
-    <div>
-      {children}
-      <button onClick={() => onSubmit()}>Submit</button>
-    </div>
-  );
-}
+}> = ({ onSubmit, children }) => (
+  <div>
+    {children}
+    <button onClick={() => onSubmit()}>Submit</button>
+  </div>
+);
 
-const Filter: FunctionComponent<{
+const filter: FunctionComponent<{
   value: string;
   placeholder: string;
   onChange: (value: string) => void;
@@ -31,7 +26,7 @@ const Filter: FunctionComponent<{
   </div>
 );
 
-const View: FunctionComponent<{
+const view: FunctionComponent<{
   selectedView: string;
   viewList: string[];
   onChange: (value: string) => void;
@@ -45,11 +40,14 @@ const View: FunctionComponent<{
   </div>
 );
 
-const List: FunctionComponent<{
+const list: FunctionComponent<{
   children?: ReactNode;
 }> = ({ children }) => <div>{children}</div>;
 
-QueryBuilderModal.Filter = Filter;
-QueryBuilderModal.View = View;
-QueryBuilderModal.List = List;
+const QueryBuilderModal = Object.assign(modal, {
+  Filter: filter,
+  View: view,
+  List: list,
+});
+
 export default QueryBuilderModal;
